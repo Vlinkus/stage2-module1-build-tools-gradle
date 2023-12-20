@@ -1,4 +1,42 @@
-//add everything here
+plugins {
+    id ('java')
+    // id for maven to publish jar to local repository
+}
+
+java {
+// provide sourceCompatibility
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(19)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.epam.utils'
+            artifactId = 'demo'
+            version = '1.0'
+
+            from components.java
+        }
+    }
+}
+
+//add Apache Apache Commons Lang 3.10 (or higher) dependency
+implementation 'org.apache.commons:commons-lang3:3.14.0'
+
+jar {
+    manifest {
+        attributes 'Implementation-Title':   getClass().getPackage().getImplementationTitle()
+        attributes 'Implementation-Version': getClass().getPackage().getImplementationVersion()
+        //provide manifest with such attributes as 'Implementation-Title', 'Implementation-Version'
+    }
+}
+
 
 test {
     useJUnitPlatform()
